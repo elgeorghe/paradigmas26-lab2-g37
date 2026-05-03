@@ -9,7 +9,21 @@ object Main {
     // Paso 1: Cargar diccionarios
     // ------------------------------------------------------------------
     // TODO (Ejercicio 2)
-    val dictionary: List[NamedEntity] = ???
+    val archivos = List(
+      "data/languages.txt",
+      "data/organizations.txt",
+      "data/people.txt",
+      "data/universities.txt",
+      "data/places.txt"
+    )
+    val dictionary: List[NamedEntity] = archivos.flatMap { ruta =>
+      val source = scala.io.Source.fromFile(ruta)
+      try {
+        source.getLines().map(palabra => EntityClassifier.classify(palabra)).toList
+      } finally {
+        source.close()
+      }
+      }
 
     println(s"Diccionario cargado: ${dictionary.size} entidades.\n")
 
