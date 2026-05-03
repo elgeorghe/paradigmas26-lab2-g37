@@ -28,37 +28,30 @@ abstract class NamedEntity(val text: String) {
    */
   def describe: String = s"[$entityType] $text"
 }
-  class ProgrammingLanguage(text: String) extends NamedEntity(text) { override def entityType = "ProgrammingLanguage"}
-  class Organization(text: String) extends NamedEntity(text) { override def entityType = "Organization"}
-  class Person(text: String) extends NamedEntity(text) { override def entityType = "Person"}
-  class University(text: String) extends NamedEntity(text) { override def entityType = "University"}
-  class Place(text: String) extends NamedEntity(text) { override def entityType = "Place"}
-
-object EntityClassifier {
-  private def loadDictionary(filepath: String): Set[String] = {
-    val source = Source.fromFile(filepath)
-    try{
-      source.getLines().toSet
-    } finally {
-      source.close()
-    }
+    class Organization(text: String) extends NamedEntity(text) {
+    override def entityType = "Organization"
   }
 
-  private val languagesWords = loadDictionary("data/languages.txt")
-  private val organizationsWords = loadDictionary("data/organizations.txt")
-  private val peopleWords = loadDictionary("data/people.txt")
-  private val universitiesWords = loadDictionary("data/universities.txt")
-  private val placesWords = loadDictionary("data/places.txt")
-
-  def classify(text: String): NamedEntity = {
-    if (languagesWords.contains(text)) new ProgrammingLanguage(text)
-    else if (organizationsWords.contains(text)) new Organization(text)
-    else if (peopleWords.contains(text)) new Person(text)
-    else if (universitiesWords.contains(text)) new University(text)
-    else if (placesWords.contains(text)) new Place(text)
-    else new NamedEntity(text) {}
+  class University(text: String) extends Organization(text) {
+    override def entityType = "University"
   }
-}
+
+  class Technology(text: String) extends NamedEntity(text) {
+    override def entityType = "Technology"
+  }
+
+  class ProgrammingLanguage(text: String) extends Technology(text) {
+    override def entityType = "ProgrammingLanguage"
+  }
+
+  class Place(text: String) extends NamedEntity(text) {
+    override def entityType = "Place"
+  }
+
+  class Person(text: String) extends NamedEntity(text) {
+    override def entityType = "Person"
+  }
+
 // =====================================================================
 // TODO (Ejercicio 1): Completar la jerarquía de entidades
 //
