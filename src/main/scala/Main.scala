@@ -33,6 +33,16 @@ object Main {
     //     1. Detectar entidades
     //     2. Formatear y mostrar el resultado
 
+    allPosts.foreach {case (url, titles) =>
+      println(s"\n\nAnalizando subreddit: $url\n\n")
+      titles.foreach { title =>
+        println(s"\n\nPost: $title\nEntidades detectadas:")
+        val found = Analyzer.detectEntities(title, dictionary)
+        found.foreach(e => println(e.describe))
+        }
+      println("================================================")
+      }
+
     // ------------------------------------------------------------------
     // Paso 4: Estadísticas globales
     // ------------------------------------------------------------------
