@@ -36,9 +36,8 @@ object Main {
     allPosts.foreach {case (url, titles) =>
       println(s"\n\nAnalizando subreddit: $url\n\n")
       titles.foreach { title =>
-        println(s"\n\nPost: $title\nEntidades detectadas:")
         val found = Analyzer.detectEntities(title, dictionary)
-        found.foreach(e => println(e.describe))
+        println(Formatters.formatNERResult(title, found))
         }
       println("================================================")
       }
