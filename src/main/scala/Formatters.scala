@@ -59,6 +59,12 @@ object Formatters {
    *     University: 2
    */
   def formatEntityStats(counts: Map[String, Int]): String = {
-    ???
+    val header = "=== Estadísticas de entidades ==="
+    val body = counts.toList
+      .sortBy { case (_, count) => -count }
+      .map { case (entityType, count) => s"$entityType: $count" }
+      .mkString("\n")
+
+    s"$header\n$body"
   }
 }

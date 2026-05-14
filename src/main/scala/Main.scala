@@ -1,6 +1,7 @@
 // =====================================================================
 // Ejercicio 6: Integración del sistema completo
 // =====================================================================
+import java.text.Format
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -50,5 +51,12 @@ object Main {
     //   2. Contar por tipo
     //   3. Mostrar el resumen
 
+    val allEntities: List[NamedEntity] = allPosts.flatMap { case (_, titles) =>
+      titles.map(title => Analyzer.detectEntities(title, dictionary)).flatten
+    }
+
+    val entityCounts: Map[String, Int] = Analyzer.countByType(allEntities)
+    println(Formatters.formatEntityStats(entityCounts))
+    println("================================================")
   }
 }
