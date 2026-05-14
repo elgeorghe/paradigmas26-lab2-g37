@@ -20,7 +20,7 @@ object Main {
     val subscriptions = FileIO.readSubscriptions()
 
     val allPosts: List[(String, List[String])] = subscriptions.map { url =>
-      println(s"Descargando posts de: $url")
+      //println(s"Descargando posts de: $url")
       val json   = FileIO.downloadFeed(url)
       val titles = FileIO.extractPostTitles(json)
       (url, titles)
@@ -35,7 +35,7 @@ object Main {
     //     2. Formatear y mostrar el resultado
 
     allPosts.foreach {case (url, titles) =>
-      println(s"\n\nAnalizando subreddit: $url\n\n")
+      println(s"\n\nDescargando posts de: $url\n\n")
       titles.foreach { title =>
         val found = Analyzer.detectEntities(title, dictionary)
         println(Formatters.formatNERResult(title, found))

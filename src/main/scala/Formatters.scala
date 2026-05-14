@@ -34,11 +34,11 @@ object Formatters {
     val postLine = s"Post: \"$postTitle\""
 
     if (entities.isEmpty) {
-      s"$postLine\n\n(sin entidades detectadas)\n\n"
+      s"$postLine\n(sin entidades detectadas)\n"
     } else {
       val entitiesHeader = "Entidades detectadas:"
       val entitiesList = entities.map(e => s"  ${e.describe}").mkString("\n")
-      s"$postLine\n\n$entitiesHeader\n$entitiesList\n\n"
+      s"$postLine\n$entitiesHeader\n$entitiesList\n\n"
     }
   }
 
