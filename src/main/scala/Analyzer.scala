@@ -6,6 +6,8 @@
  * Responsable de detectar entidades nombradas en texto libre y
  * producir estadísticas sobre ellas.
  */
+import java.util.regex.Pattern
+
 object Analyzer {
 
   /**
@@ -35,7 +37,11 @@ object Analyzer {
    *                  )
    */
   def detectEntities(text: String, dictionary: List[NamedEntity]): List[NamedEntity] = {
-    dictionary.filter(entity => text.contains(entity.text)).toSet.toList
+    val normalizedText = text
+    dictionary.filter { entity =>
+      val pattern = Pattern.compile(raw"(?i)\b${Pattern.quote(entity.text)}\b")
+      pattern.matcher(normalizedText).find()
+    }.toSet.toList
   }
 
   /**
